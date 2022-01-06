@@ -1,12 +1,14 @@
+// deno-lint-ignore-file no-var
 import fetchMovies from './mod.ts';
 import { assertEquals, assertExists } from "https://deno.land/std@0.114.0/testing/asserts.ts";
 
 declare global {
-  // deno-lint-ignore no-var
-  var IMDB_API_KEY: string;
+  var IMDB_API_KEY: string | undefined;
+  var MOVIE_YEAR: number;
 }
 
-globalThis.IMDB_API_KEY = '';
+globalThis.IMDB_API_KEY = undefined;
+globalThis.MOVIE_YEAR = 1999;
 
 Deno.test("fetchMovies", async () => {
   const nextPageToken = { pageToken: '' };

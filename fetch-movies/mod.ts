@@ -1,8 +1,6 @@
 import { fetchMovieList, fetchMovieDetailsById, fetchMovieImagesById } from "./api.ts";
 import { MovieDetailsResponse, MovieEntity, MovieImagesResponse, State } from "./types.ts";
 
-declare const IMDB_API_KEY: string;
-
 const fetchMovies  = async (stateString: string): Promise<string> => {
   let state: State;
   
@@ -22,7 +20,7 @@ const fetchMovies  = async (stateString: string): Promise<string> => {
 
   // If the movie index is 0, the next page of movies is fetched
   if (state.movieIndex === 0){
-    const movieListResponse = await fetchMovieList(state.nextPage, IMDB_API_KEY);
+    const movieListResponse = await fetchMovieList(state.nextPage);
 
     // Assign the list of movies from the movie page to the movie list. 
     if(movieListResponse.movie_results){
@@ -44,8 +42,8 @@ const fetchMovies  = async (stateString: string): Promise<string> => {
   }
 
   // Fetch the movie details and images by IMDB ID and return the combined result
-  const movieDetailsResponse: MovieDetailsResponse = await fetchMovieDetailsById(imdb_id, IMDB_API_KEY);
-  const movieImagesResponse: MovieImagesResponse = await fetchMovieImagesById(imdb_id, IMDB_API_KEY);
+  const movieDetailsResponse: MovieDetailsResponse = await fetchMovieDetailsById(imdb_id);
+  const movieImagesResponse: MovieImagesResponse = await fetchMovieImagesById(imdb_id);
   const data: MovieEntity  = {...movieDetailsResponse, ...movieImagesResponse};
 
   // Return the data as an object and strigify the state as the nextPageToken.
